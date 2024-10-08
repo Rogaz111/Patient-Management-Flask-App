@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Date, Text, LargeBinary
 from database_service import Base
 from datetime import date
 
+
 class Patient(Base):
     #Set table name
     __tablename__ = 'patients'
@@ -42,5 +43,6 @@ class Patient(Base):
     def calculate_age(self):
         """Calculate age based on the date of birth."""
         today = date.today()
-        age = today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
+        age = today.year - self.date_of_birth.year - (
+                (today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
         return int(age)

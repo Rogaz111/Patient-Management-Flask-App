@@ -5,6 +5,7 @@ from db_query_service import read_patients
 
 patients_bp = Blueprint('patients', __name__)
 
+
 @patients_bp.route('/register', methods=['GET', 'POST'])
 def register_patient():
     form = MedicalPatientForm()
@@ -15,16 +16,16 @@ def register_patient():
             # You can process the form data here
             new_patient = insert_patient(
                 name=form.name.data,
-                date_of_birth = form.date_of_birth.data,
-                gender = form.gender.data,
-                contact_number = form.contact_number.data,
-                email = form.email.data,
-                address = form.address.data,
-                medical_history = form.medical_history.data,
-                emergency_contact_name = form.emergency_contact_name.data,
-                emergency_contact_number = form.emergency_contact_number.data,
-                blood_group = form.blood_group.data,
-                photo = form.photo.data if form.photo.data else None
+                date_of_birth=form.date_of_birth.data,
+                gender=form.gender.data,
+                contact_number=form.contact_number.data,
+                email=form.email.data,
+                address=form.address.data,
+                medical_history=form.medical_history.data,
+                emergency_contact_name=form.emergency_contact_name.data,
+                emergency_contact_number=form.emergency_contact_number.data,
+                blood_group=form.blood_group.data,
+                photo=form.photo.data if form.photo.data else None
             )
             if new_patient:
                 print('Patient added successfully!')
@@ -46,4 +47,4 @@ def register_patient():
 @patients_bp.route('/view_patients', methods=['GET'])
 def patient_view():
     all_patients = read_patients()
-    return render_template('patient_view.html',patients=all_patients)
+    return render_template('patient_view.html', patients=all_patients)

@@ -1,7 +1,7 @@
 from flask import Flask
 from routes.home import home_bp
 from routes.patients import patients_bp
-from database_service import db, session, metadata, Base
+from database_service import db, metadata, Base
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -10,6 +10,7 @@ app.config['SECRET_KEY'] = 'secretkey'
 # Register Blueprints (APP Routes)
 app.register_blueprint(home_bp)
 app.register_blueprint(patients_bp)
+
 
 # Initialize the database service
 @app.before_request
@@ -23,6 +24,7 @@ def initialize_db():
     # Check if tables were created
     metadata.reflect(bind=db)
     print(f"Current Tables: {metadata.tables.keys()}")
+
 
 # Run the application
 if __name__ == '__main__':
