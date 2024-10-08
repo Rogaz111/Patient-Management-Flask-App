@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Patient Registration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Patient Access Management</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="{{ url_for('home.index') }}">Home</a>
+
+        <!-- Patients Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Patients
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('patients.register_patient') }}">Register Patient</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('patients.patient_view') }}">View Patients</a></li>
+          </ul>
+        </li>
+
+        <a class="nav-link" href="#">Doctors</a>
+        <a class="nav-link" href="#">Medical Schemes</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Dashboard Section -->
+<div class="container mt-5">
+  <div class="row">
+
+    <!-- Total Patients -->
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Patients</h5>
+          <p class="card-text display-4">{{total_patients}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Patients -->
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">New Patients</h5>
+          <p class="card-text display-4">{{patients_created_today}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Hospital Visits -->
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Hospital Visits</h5>
+          <p class="card-text display-4">Coming Soon...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Doctors -->
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Doctors</h5>
+          <p class="card-text display-4">Coming Soon...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Medical Schemes -->
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Medical Schemes</h5>
+          <p class="card-text display-4">Coming Soon...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
