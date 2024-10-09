@@ -16,7 +16,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bold text-light" href="#">Patient Overview</a>
+    <a class="navbar-brand fw-bold text-light" href="#">Doctors Overview</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -51,35 +51,37 @@
         <li class="nav-item">
           <a class="nav-link text-light" href="#">Medical Schemes</a>
         </li>
+
       </ul>
     </div>
   </div>
 </nav>
-
 <table class="table">
   <thead class="thead-dark">
     <tr class="table-primary">
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Age</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
       <th scope="col">Date of Birth</th>
       <th scope="col">Gender</th>
-      <th scope="col">Cell</th>
-      <th scope="col">Blood Group</th>
+      <th scope="col">Email</th>
+      <th scope="col">Cell Number</th>
+        <th scope="col">Department</th>
       <th scope="col">Date Created</th>
     </tr>
   </thead>
   <tbody>
-    {% for patient in patients %}
+    {% for doctor in doctors %}
       <tr>
         <th scope="row">{{ loop.index }}</th> <!-- Auto-increment row number -->
-        <td>{{ patient.name }}</td>
-        <td>{{ patient.age }}</td>
-        <td>{{ patient.date_of_birth }}</td>
-        <td>{{ patient.gender }}</td>
-        <td>{{ patient.contact_number }}</td>
-        <td>{{ patient.blood_group }}</td>
-        <td>{{ patient.create_date }}</td>
+        <td>{{ doctor.first_name }}</td>
+        <td>{{ doctor.last_name }}</td>
+        <td>{{ doctor.date_of_birth }}</td>
+        <td>{{ doctor.gender }}</td>
+        <td>{{ doctor.email }}</td>
+        <td>{{ doctor.contact_number }}</td>
+        <td>{{ doctor.department }}</td>
+        <td>{{ doctor.create_date }}</td>
       </tr>
     {% endfor %}
   </tbody>

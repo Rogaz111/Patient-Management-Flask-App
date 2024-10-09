@@ -37,7 +37,7 @@ def register_patient():
 
         else:
             print('Form validation failed')
-            print(f'Errors Occured:{form.errors}')
+            print(f'Errors Occurred:{form.errors}')
             return render_template('patient_registration.html', form=form)
     else:
         # If the request is GET or form validation failed, render the form template again

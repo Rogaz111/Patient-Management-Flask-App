@@ -74,3 +74,13 @@ def insert_doctor(first_name, last_name, date_of_birth, gender, email, contact_n
         session.rollback()  # Rollback the session if there’s an error
         print(f"Error inserting doctor: {e}")
         return False
+
+
+# Read all doctors from the database
+def read_doctors():
+    try:
+        doctors = session.query(Doctor).all()  # Query all patients
+        return doctors
+    except Exception as e:
+        print(f"Error reading doctors: {e}")
+        return []

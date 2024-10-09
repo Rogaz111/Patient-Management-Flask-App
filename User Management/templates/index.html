@@ -45,7 +45,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" href="{{ url_for('doctors.register_doctors') }}">Register Doctor</a></li>
-            <li><a class="dropdown-item" href="#">View Doctors</a></li>
+            <li><a class="dropdown-item" href="{{url_for('doctors.doctors_view')}}">View Doctors</a></li>
           </ul>
         </li>
 
@@ -99,7 +99,7 @@
       <div class="card text-center shadow-sm">
         <div class="card-body">
           <h5 class="card-title">Total Doctors</h5>
-          <p class="card-text display-4">Coming Soon...</p>
+          <p class="card-text display-4">{{total_doctors}}</p>
         </div>
       </div>
     </div>
