@@ -37,8 +37,15 @@
           </ul>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link text-light" href="#">Doctors</a>
+        <!-- Doctors Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Doctors
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="{{ url_for('doctors.register_doctors') }}">Register Doctor</a></li>
+            <li><a class="dropdown-item" href="#">View Doctors</a></li>
+          </ul>
         </li>
 
         <li class="nav-item">
