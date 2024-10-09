@@ -1,6 +1,7 @@
 from datetime import date
 from database_service import session
 from models.patient_model import Patient
+from models.doctors_model import Doctor
 
 
 # Insert a new patient into the database
@@ -49,3 +50,27 @@ def read_patients_today():
     except Exception as e:
         print(f"Error reading patients: {e}")
         return []
+
+
+def insert_doctor(first_name, last_name, date_of_birth, gender, email, contact_number, department, address,
+                  profile_photo=None):
+    try:
+        new_doctor = Doctor(
+            first_name=first_name,
+            last_name=last_name,
+            date_of_birth=date_of_birth,
+            gender=gender,
+            contact_number=contact_number,
+            department=department,
+            email=email,
+            address=address,
+            profile_photo=profile_photo
+        )
+        session.add(new_doctor)  # Add to session
+        session.commit()  # Commit the transaction
+        print("Doctor successfully added.")
+        return True
+    except Exception as e:
+        session.rollback()  # Rollback the session if there’s an error
+        print(f"Error inserting doctor: {e}")
+        return False
