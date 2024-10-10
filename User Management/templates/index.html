@@ -25,6 +25,14 @@
         flex-direction: column;
         justify-content: center; /* Centers content vertically */
       }
+
+      .dashFocus {
+        transition: transform 0.2s ease-in-out; /* Smooth transition */
+      }
+
+      .dashFocus:hover {
+        transform: scale(1.05); /* Slightly zoom in on hover */
+      }
     </style>
 </head>
 <body>
@@ -49,7 +57,7 @@
             Appointments
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="#">Schedule Appointment</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('appointments.book_appointment') }}">Schedule Appointment</a></li>
             <li><a class="dropdown-item" href="#">View Schedule</a></li>
           </ul>
         </li>
@@ -164,11 +172,21 @@
     </div>
   </div>
 
-<!-- Chart Section -->
-<div class="row mt-4">
+  <!-- Chart Type Selection Dropdown -->
+  <div class="d-flex justify-content-end mb-3">
+    <select id="chartTypeSelect" class="form-select w-auto">
+      <option value="bar">Bar</option>
+      <option value="line">Line</option>
+      <option value="pie">Pie</option>
+    </select>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="row mt-4">
+
   <!-- Total Patient Chart -->
   <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-    <div class="card shadow-sm">
+    <div class="card shadow-sm dashFocus">
       <div class="card-body">
         <h5 class="card-title">Total Patients</h5>
         <canvas id="totalPatientsChart"></canvas>
@@ -178,20 +196,20 @@
 
   <!-- Total Doctors Chart -->
   <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-    <div class="card shadow-sm">
+    <div class="card shadow-sm dashFocus">
       <div class="card-body">
         <h5 class="card-title">Total Doctors</h5>
-        <canvas id="totalDoctorsChart"></canvas>
+        <canvas class="doctorDash" id="totalDoctorsChart"></canvas>
       </div>
     </div>
   </div>
 
   <!-- Total Medical Scheme Chart -->
   <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-    <div class="card shadow-sm">
+    <div class="card shadow-sm dashFocus">
       <div class="card-body">
         <h5 class="card-title">Total Medical Schemes</h5>
-        <canvas id="totalSchemeChart"></canvas>
+        <canvas class="schemeDash" id="totalSchemeChart"></canvas>
       </div>
     </div>
   </div>
@@ -206,6 +224,22 @@
   const totalDoctors = document.querySelector('.container').dataset.totalDoctors;
   const totalSchemes = document.querySelector('.container').dataset.totalSchemes;
 
+  // Get selected chart value selected
+  const chartTypeSelect = document.getElementById('chartTypeSelect');
+
+  chartTypeSelect.addEventListener('change', function() {
+    const selectedType = this.value;
+
+    // Update all charts with the new selected type
+    overviewChart.config.type = selectedType;
+    overviewChart.update();
+
+    newDoctorsChart.config.type = selectedType;
+    newDoctorsChart.update();
+
+    totalSchemeChart.config.type = selectedType;
+    totalSchemeChart.update();
+  });
 
 
   // Parse the value as needed and update the chart data
@@ -217,6 +251,7 @@
       datasets: [{
         label: 'Total Patients',
         data: [totalPatients],
+        grouped: true,
         backgroundColor: 'rgba(54, 162, 235, 0.5)', // Bar color
         borderColor: 'rgba(54, 162, 235, 1)', // Border color for bars
         fill: true,
