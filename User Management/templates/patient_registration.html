@@ -27,6 +27,17 @@
               <a class="nav-link active text-light" aria-current="page" href="{{ url_for('home.index') }}">Home</a>
             </li>
 
+        <!-- Appointment Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Appointments
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#">Schedule Appointment</a></li>
+            <li><a class="dropdown-item" href="#">View Schedule</a></li>
+          </ul>
+        </li>
+
             <!-- Patients Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,9 +60,16 @@
               </ul>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link text-light" href="#">Medical Schemes</a>
-            </li>
+      <!-- Medical Schemes Drop Down -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Medical Schemes
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="{{url_for('medical_schemes.load_scheme')}}">Load Schemes</a></li>
+          </ul>
+        </li>
+
           </ul>
         </div>
       </div>

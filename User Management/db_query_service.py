@@ -2,6 +2,7 @@ from datetime import date
 from database_service import session
 from models.patient_model import Patient
 from models.doctors_model import Doctor
+from models.medical_scheme_model import MedicalScheme
 
 
 # Insert a new patient into the database
@@ -83,4 +84,36 @@ def read_doctors():
         return doctors
     except Exception as e:
         print(f"Error reading doctors: {e}")
+        return []
+
+
+# Insert new Medical Scheme
+def insert_scheme(scheme_name, scheme_code, scheme_administrator, scheme_contact_number, scheme_email,
+                  scheme_address, scheme_premium, scheme_status):
+    try:
+        new_scheme = MedicalScheme(
+            scheme_name=scheme_name,
+            scheme_code=scheme_code,
+            scheme_administrator=scheme_administrator,
+            scheme_contact_number=scheme_contact_number,
+            scheme_email=scheme_email,
+            scheme_address=scheme_address,
+            scheme_premium=scheme_premium,
+            scheme_status=scheme_status,
+        )
+        session.add(new_scheme)  # Add to session
+        session.commit()  # Commit the transaction
+        return True
+    except Exception as e:
+        print(f"Error inserting scheme: {e}")
+        return False
+
+
+# Read all Medical Schemes from the database
+def read_schemes():
+    try:
+        schemes = session.query(MedicalScheme).all()  # Query all patients
+        return schemes
+    except Exception as e:
+        print(f"Error reading schemes: {e}")
         return []
