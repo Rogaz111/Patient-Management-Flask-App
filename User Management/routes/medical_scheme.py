@@ -38,3 +38,4 @@ def load_scheme():
             return render_template('medical_scheme_reg.html', form=form)
 
     return render_template('medical_scheme_reg.html', form=form)
+

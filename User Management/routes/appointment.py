@@ -6,7 +6,6 @@ from db_query_service import read_patients
 from db_query_service import read_schemes
 from db_query_service import insert_appointment
 
-
 appointments_bp = Blueprint('appointments', __name__)
 
 
@@ -48,4 +47,9 @@ def book_appointment():
             print(f'Errors Occurred:{form.errors}')
             return render_template('book_appointment.html', form=form)
 
-    return render_template('book_appointment.html',form=form)
+    return render_template('book_appointment.html', form=form)
+
+
+@appointments_bp.route('/view_schedule', methods=['GET'])
+def view_schedule():
+    return render_template('view_appointments.html')
