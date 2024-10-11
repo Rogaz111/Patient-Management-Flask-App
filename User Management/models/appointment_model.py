@@ -14,12 +14,12 @@ class Appointment(Base):
     appointment_date = Column(Date, nullable=False)
     appointment_time = Column(Time, nullable=False)
     reason = Column(String(255), nullable=True)
-    status = Column(String(50), nullable=False, default='scheduled')  # Default status as 'Scheduled'
+    status = Column(String(50), nullable=False, default='pending')  # Default status as 'Scheduled'
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     def __init__(self, patient_id, doctor_id, appointment_date, appointment_time, reason=None,
-                 medical_scheme_id=None, has_medical_scheme=False, status='scheduled', notes=None):
+                 medical_scheme_id=None, has_medical_scheme=False, status='pending', notes=None):
         self.patient_id = patient_id
         self.doctor_id = doctor_id
         self.medical_scheme_id = medical_scheme_id
