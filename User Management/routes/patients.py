@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from forms.patient_form import MedicalPatientForm
-from db_query_service import insert_patient, read_patients
+from db_query_service import insert_patient, read_patients, insert_error_log
 
 patients_bp = Blueprint('patients', __name__)
 
@@ -32,11 +32,13 @@ def register_patient():
                 return redirect(url_for('home.index'))
             else:
                 print('Failed to add patient.')
+                insert_error_log('Failed to add patient.', 'patient', True)
                 return render_template('patient_registration.html', form=form)
 
         else:
             print('Form validation failed')
             print(f'Errors Occurred:{form.errors}')
+            insert_error_log(form.errors, 'appointment', True)
             return render_template('patient_registration.html', form=form)
     else:
         # If the request is GET or form validation failed, render the form template again
@@ -45,5 +47,8 @@ def register_patient():
 
 @patients_bp.route('/view_patients', methods=['GET'])
 def patient_view():
-    all_patients = read_patients()
-    return render_template('patient_view.html', patients=all_patients)
+    try:
+        all_patients = read_patients()
+        return render_template('patient_view.html', patients=all_patients)
+    except Exception as e:
+        insert_error_log(e, 'patient',True)

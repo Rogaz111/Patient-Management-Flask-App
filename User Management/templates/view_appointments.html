@@ -74,6 +74,9 @@
 <table class="table">
   <thead class="thead-dark">
     <tr class="table-primary">
+      <th scope="col">
+        <input type="checkbox" id="selectAll"> <!-- "Select All" Checkbox -->
+      </th>
       <th scope="col">#</th>
       <th scope="col">Patient</th>
       <th scope="col">Doctor</th>
@@ -83,20 +86,26 @@
       <th scope="col">Date Created</th>
     </tr>
   </thead>
-<tbody>
+  <tbody>
     {% for appoint in all_appointments %}
       <tr>
+        <td>
+          <input type="checkbox" class="appointment-checkbox" value="{{ appoint.Appointment.id }}"> <!-- Checkbox for each row -->
+        </td>
         <th scope="row">{{ loop.index }}</th> <!-- Auto-increment row number -->
-        <td>{{ appoint.patient_name }}</td> <!-- Use patient_name from the query -->
-        <td>{{ appoint.doctor_last_name }}</td> <!-- Use doctor_last_name from the query -->
-        <td>{{ appoint.scheme_name }}</td> <!-- Use scheme_name from the query -->
-        <td>{{ appoint.Appointment.appointment_date }}</td> <!-- Still accessing from Appointment object -->
-        <td>{{ appoint.Appointment.appointment_time }}</td> <!-- Still accessing from Appointment object -->
-        <td>{{ appoint.Appointment.created_at }}</td> <!-- Still accessing from Appointment object -->
+        <td>{{ appoint.patient_name }}</td>
+        <td>{{ appoint.doctor_last_name }}</td>
+        <td>{{ appoint.scheme_name }}</td>
+        <td contenteditable='true'>{{ appoint.Appointment.appointment_date }}</td>
+        <td contenteditable='true'>{{ appoint.Appointment.appointment_time }}</td>
+        <td>{{ appoint.Appointment.created_at }}</td>
       </tr>
     {% endfor %}
-</tbody>
+  </tbody>
+</table>
 
+<!-- JavaScript file -->
+<script src="{{ url_for('static', filename='function.js') }}"></script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

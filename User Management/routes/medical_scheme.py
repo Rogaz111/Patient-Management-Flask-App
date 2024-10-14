@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from forms.medical_scheme_form import MedicalSchemeForm
 from db_query_service import insert_scheme
-from db_query_service import read_schemes
+from db_query_service import insert_error_log
 
 medical_scheme_bp = Blueprint('medical_schemes', __name__)
 
@@ -29,12 +29,14 @@ def load_scheme():
                     return redirect(url_for('home.index'))
                 else:
                     print('Failed to add Scheme.')
+                    insert_error_log('Failed to add Scheme.', 'medical_scheme', True)
                     return render_template('medical_scheme_reg.html', form=form)
             except Exception as e:
                 print(f'Failed to add Scheme: {e}')
         else:
             print('Form validation failed')
             print(f'Errors Occurred:{form.errors}')
+            insert_error_log(form.errors, 'medical_scheme', True)
             return render_template('medical_scheme_reg.html', form=form)
 
     return render_template('medical_scheme_reg.html', form=form)

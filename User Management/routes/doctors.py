@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from forms.doctors_form import DoctorRegistrationForm
 from db_query_service import insert_doctor
-from db_query_service import read_doctors
+from db_query_service import read_doctors, insert_error_log
 
 doctors_bp = Blueprint('doctors', __name__)
 
@@ -29,11 +29,13 @@ def register_doctors():
                 return redirect(url_for('home.index'))
             else:
                 print('Failed to add doctor.')
+                insert_error_log('Failed to add doctor.', 'doctor', True)
                 return render_template('doctor_registration.html', form=form)
 
         else:
             print('Form validation failed')
             print(f'Errors Occurred:{form.errors}')
+            insert_error_log(form.errors, 'doctor', True)
             return render_template('doctor_registration.html', form=form)
 
     return render_template('doctor_registration.html', form=form)
@@ -41,5 +43,9 @@ def register_doctors():
 
 @doctors_bp.route('/view_doctors', methods=['GET', 'POST'])
 def doctors_view():
-    all_doctors = read_doctors()
-    return render_template('doctors_view.html', doctors=all_doctors)
+    try:
+        all_doctors = read_doctors()
+        return render_template('doctors_view.html', doctors=all_doctors)
+    except Exception as e:
+        insert_error_log(e, 'doctor', True)
+

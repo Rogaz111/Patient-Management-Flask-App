@@ -1,10 +1,10 @@
-from datetime import date
+from datetime import date, datetime
 from database_service import session
-from sqlalchemy.orm import joinedload
 from models.patient_model import Patient
 from models.doctors_model import Doctor
 from models.medical_scheme_model import MedicalScheme
 from models.appointment_model import Appointment
+from utils.error_log import ErrorLog
 
 
 # Insert a new patient into the database
@@ -121,6 +121,7 @@ def read_schemes():
         return []
 
 
+# Insert Medial Appointment upon creation
 def insert_appointment(patient_id, doctor_id, has_medical_aid, medical_scheme_id, appointment_date, appointment_time,
                        appointment_reason,
                        appointment_status, appointment_notes):
@@ -145,6 +146,7 @@ def insert_appointment(patient_id, doctor_id, has_medical_aid, medical_scheme_id
         return False
 
 
+#Read all appointments and include lookups to FK to use in View Appointment table
 def read_appointments():
     try:
         appointments = session.query(
@@ -152,12 +154,40 @@ def read_appointments():
             Patient.name.label('patient_name'),
             Doctor.last_name.label('doctor_last_name'),
             MedicalScheme.scheme_name.label('scheme_name')
-        ).join(Patient, Appointment.patient_id == Patient.id)\
-         .join(Doctor, Appointment.doctor_id == Doctor.id)\
-         .join(MedicalScheme, Appointment.medical_scheme_id == MedicalScheme.id)\
-         .all()
+        ).join(Patient, Appointment.patient_id == Patient.id) \
+            .join(Doctor, Appointment.doctor_id == Doctor.id) \
+            .join(MedicalScheme, Appointment.medical_scheme_id == MedicalScheme.id) \
+            .all()
 
         return appointments
     except Exception as e:
         print(f"Error reading appointments: {e}")
         return []
+
+
+#Update appointment date or time
+def update_appointment_query(app_id, field, new_value):
+    appointment = session.query(Appointment).filter_by(id=app_id).first()
+    # Update the field (date or time)
+    if field == 'appointment_date':
+        new_value = datetime.strptime(new_value, '%Y-%m-%d').date()
+        appointment.appointment_date = new_value
+    elif field == 'appointment_time':
+        new_value = datetime.strptime(new_value, '%H:%M:%S').time()
+        appointment.appointment_time = new_value
+    session.commit()
+
+
+#Update error_log table
+def insert_error_log(error_message, error_table, error_occurred):
+    try:
+        new_log = ErrorLog(
+            error_message=error_message,
+            error_table=error_table,
+            error_occurred=error_occurred
+        )
+        if new_log:
+            session.add(new_log)
+            session.commit()
+    except Exception as e:
+        print(f'Error Occurred inserting error log entry: {e}')
