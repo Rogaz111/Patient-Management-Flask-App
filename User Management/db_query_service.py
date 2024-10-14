@@ -1,5 +1,6 @@
 from datetime import date
 from database_service import session
+from sqlalchemy.orm import joinedload
 from models.patient_model import Patient
 from models.doctors_model import Doctor
 from models.medical_scheme_model import MedicalScheme
@@ -146,8 +147,17 @@ def insert_appointment(patient_id, doctor_id, has_medical_aid, medical_scheme_id
 
 def read_appointments():
     try:
-        appointments = session.query(Appointment).all()  # Query all patients
+        appointments = session.query(
+            Appointment,
+            Patient.name.label('patient_name'),
+            Doctor.last_name.label('doctor_last_name'),
+            MedicalScheme.scheme_name.label('scheme_name')
+        ).join(Patient, Appointment.patient_id == Patient.id)\
+         .join(Doctor, Appointment.doctor_id == Doctor.id)\
+         .join(MedicalScheme, Appointment.medical_scheme_id == MedicalScheme.id)\
+         .all()
+
         return appointments
     except Exception as e:
-        print(f"Error reading schemes: {e}")
+        print(f"Error reading appointments: {e}")
         return []

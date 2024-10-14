@@ -1,10 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
+
+from db_query_service import (read_doctors, read_patients, read_schemes, insert_appointment, read_appointments)
 from forms.appointment_form import BookAppointmentForm
-from models.appointment_model import Appointment
-from db_query_service import read_doctors
-from db_query_service import read_patients
-from db_query_service import read_schemes
-from db_query_service import insert_appointment
 
 appointments_bp = Blueprint('appointments', __name__)
 
@@ -52,4 +49,5 @@ def book_appointment():
 
 @appointments_bp.route('/view_schedule', methods=['GET'])
 def view_schedule():
-    return render_template('view_appointments.html')
+    all_appointments = read_appointments()
+    return render_template('view_appointments.html',all_appointments=all_appointments)

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey, Time, DateTime, Boolean
+from sqlalchemy.orm import relationship
 from database_service import Base
 from datetime import datetime
 
@@ -17,6 +18,11 @@ class Appointment(Base):
     status = Column(String(50), nullable=False, default='pending')  # Default status as 'Scheduled'
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # Define relationships to access related data
+    patient = relationship('Patient', backref='appointments')
+    doctor = relationship('Doctor', backref='appointments')
+    medical_scheme = relationship('MedicalScheme', backref='appointments')
 
     def __init__(self, patient_id, doctor_id, appointment_date, appointment_time, reason=None,
                  medical_scheme_id=None, has_medical_scheme=False, status='pending', notes=None):

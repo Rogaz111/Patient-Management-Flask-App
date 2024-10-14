@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from forms.patient_form import MedicalPatientForm
-from db_query_service import insert_patient
-from db_query_service import read_patients
+from db_query_service import insert_patient, read_patients
 
 patients_bp = Blueprint('patients', __name__)
 
